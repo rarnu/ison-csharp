@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>Isonantic</RootNamespace>
+    <AssemblyName>Isonantic</AssemblyName>
+    <Version>1.0.0</Version>
+    <Authors>Mahesh Vaikri</Authors>
+    <Description>Zod-like validation and type-safe schemas for ISON format in C#</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+
+</Project>
