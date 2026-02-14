@@ -8,7 +8,7 @@ public class IsonanticTests
     [Fact]
     public void TestVersion()
     {
-        Assert.Equal("1.0.0", IsonanticInfo.Version);
+        Assert.Equal("1.0.1", IsonanticInfo.Version);
     }
 
     // String Schema Tests

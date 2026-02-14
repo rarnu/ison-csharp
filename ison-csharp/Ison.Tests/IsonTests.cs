@@ -9,7 +9,7 @@ namespace Ison.Tests
         [Fact]
         public void TestVersion()
         {
-            Assert.Equal("1.0.0", VersionInfo.Version);
+            Assert.Equal("1.0.1", VersionInfo.Version);
         }
 
         [Fact]
