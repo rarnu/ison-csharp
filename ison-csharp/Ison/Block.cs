@@ -12,8 +12,8 @@ namespace Ison
         {
             Kind = kind;
             Name = name;
-            Fields = new List<FieldInfo>();
-            Rows = new List<Row>();
+            Fields = [];
+            Rows = [];
         }
 
         public void AddField(string name, string typeHint = "")
