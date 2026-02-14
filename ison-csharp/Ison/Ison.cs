@@ -182,14 +182,14 @@ namespace Ison
                     continue;
                 }
 
-                var parts = trimmed.Split(new[] { '|' }, 3);
+                var parts = trimmed.Split(['|'], 3);
                 if (parts.Length != 3)
                 {
                     continue;
                 }
 
                 var header = parts[0];
-                var headerParts = header.Split(new[] { '.' }, 2);
+                var headerParts = header.Split(['.'], 2);
                 if (headerParts.Length != 2)
                 {
                     continue;
@@ -212,7 +212,8 @@ namespace Ison
                 }
 
                 Debug.Assert(block != null, nameof(block) + " != null");
-                
+
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 var tokens = Parser.TokenizeLine(parts[2]);
                 var row = new Row();
                 for (int i = 0; i < tokens.Count; i++)
@@ -226,6 +227,7 @@ namespace Ison
                 }
                 block.AddRow(row);
             }
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
             return doc;
         }
@@ -268,14 +270,14 @@ namespace Ison
         {
             public string Kind { get; set; } = "";
             public string Name { get; set; } = "";
-            public List<string> Fields { get; set; } = new();
-            public Dictionary<string, Value> Values { get; set; } = new();
+            public List<string> Fields { get; set; } = [];
+            public Dictionary<string, Value> Values { get; set; } = [];
         }
 
         public static ChannelReader<IsonlRecord> IsonlStream(TextReader reader)
         {
             var channel = Channel.CreateUnbounded<IsonlRecord>();
-            
+
             _ = Task.Run(async () =>
             {
                 string? line;
@@ -287,14 +289,14 @@ namespace Ison
                         continue;
                     }
 
-                    var parts = trimmed.Split(new[] { '|' }, 3);
+                    var parts = trimmed.Split(['|'], 3);
                     if (parts.Length != 3)
                     {
                         continue;
                     }
 
                     var header = parts[0];
-                    var headerParts = header.Split(new[] { '.' }, 2);
+                    var headerParts = header.Split(['.'], 2);
                     if (headerParts.Length != 2)
                     {
                         continue;
@@ -329,7 +331,7 @@ namespace Ison
                         Values = values
                     });
                 }
-                
+
                 channel.Writer.Complete();
             });
 
@@ -354,15 +356,19 @@ namespace Ison
                         case 'n':
                             current.Append('\n');
                             break;
+
                         case 't':
                             current.Append('\t');
                             break;
+
                         case '"':
                             current.Append('"');
                             break;
+
                         case '\\':
                             current.Append('\\');
                             break;
+
                         default:
                             current.Append(ch);
                             break;
@@ -477,8 +483,8 @@ namespace Ison
                 JsonValueKind.Null => Value.Null(),
                 JsonValueKind.True => Value.Bool(true),
                 JsonValueKind.False => Value.Bool(false),
-                JsonValueKind.Number => element.TryGetInt64(out var intVal) 
-                    ? Value.Int(intVal) 
+                JsonValueKind.Number => element.TryGetInt64(out var intVal)
+                    ? Value.Int(intVal)
                     : Value.Float(element.GetDouble()),
                 JsonValueKind.String => Value.String(element.GetString() ?? ""),
                 _ => Value.String(element.ToString())

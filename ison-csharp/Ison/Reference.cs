@@ -105,7 +105,18 @@ namespace Ison
 
         public override int GetHashCode()
         {
+            // NETSTANDARD2_0 lacks HashCode.Combine, so fall back to manual hashing
+#if NETSTANDARD2_0
+            unchecked
+            {
+                var hash = ID?.GetHashCode() ?? 0;
+                hash = (hash * 397) ^ (Namespace?.GetHashCode() ?? 0);
+                hash = (hash * 397) ^ (Relationship?.GetHashCode() ?? 0);
+                return hash;
+            }
+#else
             return HashCode.Combine(ID, Namespace, Relationship);
+#endif
         }
 
         public static bool operator ==(Reference left, Reference right)
